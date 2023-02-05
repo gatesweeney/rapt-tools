@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"; // Removed "Link"
 import { Webp } from "./webp";
+import './App.css'
 
 function App() {
   return (
