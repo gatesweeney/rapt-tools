@@ -4,6 +4,9 @@ import { Webp } from "./webp";
 import './App.css'
 
 function App() {
+
+  document.title = "RAPT TOOLS"
+
   return (
     <Router>
         
@@ -106,8 +109,10 @@ function Sidebar() {
 
 
 function Home() {
+
   return (
     <div>
+      <title>RAPT TOOLS</title>
       <h1 class="display-3">Welcome to the web tools portal by Gates Sweeney</h1>
       <p class="display-5">Choose a tool to begin</p>
       <div class="flex-horiz">

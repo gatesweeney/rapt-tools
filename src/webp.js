@@ -4,17 +4,31 @@ import convertToWebp from "webp-converter-clientside";
 import JSZip from "jszip";
 import saveAs from 'file-saver';
 
-
-
+var blobArray = [];
+var compression = 0.7;
 
 
 
 function Webp() {
 
+
+  document.title = 'WebP Converter'; 
+
+
+
   $(document).on("change", "#uploader", async function(){
 
     $("#uploader").hide();
-    const files = this.files;
+    const raw = this.files;
+    var files = [];
+
+    console.log(raw);
+
+    for (let index = 0; index < raw.length; index++) {
+      files.push(raw[index]);
+    }
+
+    console.log(files);
 
     $('#total-images').text(String(files.length));
 
@@ -39,7 +53,15 @@ function Webp() {
   });
 
     return (
-        <div class="container-fluid ptb30">
+        <div>
+          <h1 class="display-3">WebP Converter</h1><br></br>
+
+          <div class="container-md">
+            <label id="compression-label" for="compression" class="form-label">Compression: </label><br></br>
+            <input id="compression" type="range" onInput={compressionVal} class="form-range" min="0" max="1" step="0.1"></input>
+            <br></br><br></br>
+          </div>
+
           <h1 id="finished">Finished!</h1>
           <div class="mb-3">
               <input type="file" multiple class="form-control" id="uploader" accept="image/*" disabled=""></input>
@@ -103,10 +125,11 @@ async function processFiles(files) {
 
     file = files[f];
     var name = file.name;
-    var extension = name.split('.')[1];
+    // Gets last array item when split by a period
+    var extension = name.split('.').slice(-1)[0] ;
     var newName = name.replace(extension, "webp")
 
-    const convertedFile = await convertToWebp(file, 0.5)
+    const convertedFile = await convertToWebp(file, parseFloat(compression))
 
     const blob = window.URL.createObjectURL(convertedFile);
 
@@ -127,3 +150,32 @@ function warning(e) {
   (e || window.event).returnValue = confirmationMessage; //Gecko + IE
   return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
 }
+
+
+async function convert(file, index) {
+    //$('#image-now').text(String(f + 1));
+    //$('#myBar').css("width", `${prcnt}%`)
+    $('#percent').text(`${index}%`)
+
+    var name = file.name;
+    // Gets last array item when split by a period
+    var extension = name.split('.').slice(-1)[0] ;
+    var newName = name.replace(extension, "webp")
+
+    const convertedFile = await convertToWebp(file, 0.5)
+
+    const blob = window.URL.createObjectURL(convertedFile);
+
+    console.log(blob);
+
+    blobArray.push({"blob": blob, "name": newName});
+
+  }
+
+  
+  function compressionVal(val){  
+    val = $('#compression').val();
+    compression = val;
+    $('#compression-label').text(  `Compression: ${val}:1`  )
+  } 
+  
