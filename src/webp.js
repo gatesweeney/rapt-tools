@@ -47,9 +47,6 @@ function Webp() {
     // Remove Warning
     window.removeEventListener("beforeunload", warning);
 
-
-
-
   });
 
     return (
