@@ -6,8 +6,10 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "browser-image-compression": "^2.0.0",
     "file-saver": "^2.0.5",
     "fluent-ffmpeg": "^2.1.2",
+    "heic2any": "^0.0.3",
     "jquery": "^3.6.3",
     "jszip": "^3.10.1",
     "media-converter": "^1.1.7",
@@ -15,9 +17,11 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "sharp": "^0.31.3",
     "webp-converter": "^2.3.3",
     "webp-converter-browser": "^1.0.3",
-    "webp-converter-clientside": "^1.0.1"
+    "webp-converter-clientside": "^1.0.1",
+    "yarn": "^1.22.19"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,17 +1,13 @@
 import React from "react";
 import $ from 'jquery';
-import convertToWebp from "webp-converter-clientside";
+import heic2any from "heic2any";
 import JSZip from "jszip";
 import saveAs from 'file-saver';
 
-var compression = 0.7;
+function HEIC() {
 
 
-
-function Webp() {
-
-
-  document.title = 'WebP Converter'; 
+  document.title = 'HEIC Converter'; 
 
 
 
@@ -20,14 +16,15 @@ function Webp() {
     $("#uploader").hide();
     const files = this.files;
 
+
     console.log(files);
 
     $('#total-images').text(String(files.length));
 
     var blobArray = await processFiles(files);
 
-    if (blobArray.length <= 5) {
-      for (let a = 0; a <blobArray.length; a++) {   saveAs(blobArray[a].blob, blobArray[a].name)   }
+    if (blobArray.length <= 1) {
+      for (let a = 0; a < blobArray.length; a++) {   saveAs(blobArray[a].blob, blobArray[a].name)   }
     } else {
       saveZip(blobArray);
     }
@@ -43,18 +40,12 @@ function Webp() {
 
     return (
         <div>
-          <h1 class="display-3">WebP Converter</h1><br></br>
-
-          <div class="container-md">
-            <label id="compression-label" for="compression" class="form-label">Compression: 0.7:1 (default)</label><br></br>
-            <input id="compression" type="range" onInput={compressionVal} class="form-range" min="0.1" max="1" step="0.1"></input>
-            <br></br><br></br>
-          </div>
+          <h1 class="display-3">HEIC Converter</h1><br></br>
 
           <h1 id="finished">Finished!</h1>
           <div class="mb-3">
-              <input type="file" multiple class="form-control" id="uploader" accept="image/*" disabled=""></input>
-              <br></br><a id="reload" href="/webp">Reload</a>
+              <input type="file" multiple class="form-control" id="uploader" accept="image/heic" disabled=""></input>
+              <br></br><a id="reload" href="/heic">Reload</a>
           </div>
           <div id="results">
             <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
@@ -70,7 +61,7 @@ function Webp() {
 
 }
 
-export { Webp };
+export { HEIC };
 
 
 async function saveZip(photos) {
@@ -85,7 +76,7 @@ async function saveZip(photos) {
   }
 
   zip.generateAsync({type:"blob"}).then(function(file) {
-      saveAs(file, `webp-converted-${photos.length}.zip`);
+      saveAs(file, `heic-converted-${photos.length}.zip`);
   });
 
 };
@@ -116,11 +107,15 @@ async function processFiles(files) {
     var name = file.name;
     // Gets last array item when split by a period
     var extension = name.split('.').slice(-1)[0] ;
-    var newName = name.replace(extension, "webp")
+    var newName = name.replace(extension, "jpg")
 
-    const convertedFile = await convertToWebp(file, parseFloat(compression))
-
-    const blob = window.URL.createObjectURL(convertedFile);
+    var blob = await heic2any({ blob: file, toType: "image/jpeg", quality: 1 }).then(
+      (newImage) => {
+        console.log("new image:", newImage);
+        const bloburl = URL.createObjectURL(newImage);
+        return bloburl;
+      }
+    );
 
     console.log(blob);
 
@@ -140,10 +135,3 @@ function warning(e) {
   return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
 }
 
-  
-function compressionVal(val){  
-  val = $('#compression').val();
-  compression = val;
-  $('#compression-label').text(  `Compression: ${val}:1`  )
-} 
-  

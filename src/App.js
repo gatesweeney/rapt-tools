@@ -1,27 +1,31 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"; // Removed "Link"
 import { Webp } from "./webp";
+import { HEIC } from "./heic";
+import { Compressor } from "./compressor";
 import './App.css'
 
 function App() {
+
+
 
   document.title = "RAPT TOOLS"
 
   return (
     <Router>
-        
-
-      
       <Navtop />
       <div class="page-wrap">
       {/*<Sidebar />*/}
       <div class="main-content">
       <Switch>
-        <Route path="/page2">
-          <About />
+        <Route path="/heic">
+          <HEIC />
         </Route>
         <Route path="/webp">
           <Webp />
+        </Route>
+        <Route path="/compressor">
+          <Compressor />
         </Route>
         <Route path="/">
           <Home />
@@ -35,12 +39,6 @@ function App() {
 
 export default App;
 
-
-function About() {
-  return (
-    <h1>I'm Page 2 pooper</h1>
-  )
-}
 
 function Navtop() {
   return (
@@ -59,6 +57,12 @@ function Navtop() {
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/webp">WebP Converter</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/heic">HEIC Converter</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/compressor">Image Compressor</a>
                 </li>
               </ul>
             </div>
@@ -117,7 +121,9 @@ function Home() {
       <p class="display-5">Choose a tool to begin</p>
       <div class="flex-horiz">
         <a type="button" class="btn btn-primary btn-lg" href="/webp">WebP Image Converter</a>
-        <a type="button" class="btn btn-primary btn-lg" href="/">Coming Soon</a>
+        <a type="button" class="btn btn-primary btn-lg" href="/heic">HEIC Image Converter</a>
+        <a type="button" class="btn btn-primary btn-lg" href="/compressor">Image Compressor</a>
+        <a type="button" class="btn btn-primary btn-lg" href="/">More Coming Soon</a>
       </div>
     </div>
   )
