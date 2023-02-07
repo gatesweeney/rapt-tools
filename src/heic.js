@@ -7,7 +7,7 @@ import saveAs from 'file-saver';
 function HEIC() {
 
 
-  document.title = 'HEIC Converter'; 
+  document.title = 'HEIC to JPG'; 
 
 
 
@@ -40,7 +40,7 @@ function HEIC() {
 
     return (
         <div>
-          <h1 class="display-3">HEIC Converter</h1><br></br>
+          <h1 class="display-3">HEIC to JPG Converter</h1><br></br>
 
           <h1 id="finished">Finished!</h1>
           <div class="mb-3">

@@ -1,12 +1,15 @@
 import React from "react";
+import ReactGA from 'react-ga';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"; // Removed "Link"
 import { Webp } from "./webp";
 import { HEIC } from "./heic";
 import { Compressor } from "./compressor";
+import { VideoCompressor } from "./videoCompressor";
 import './App.css'
 
 function App() {
-
+  //Analytics
+  ReactGA.initialize('G-6MWVGFTCPW');
 
 
   document.title = "RAPT TOOLS"
@@ -26,6 +29,9 @@ function App() {
         </Route>
         <Route path="/compressor">
           <Compressor />
+        </Route>
+        <Route path="/video">
+          <VideoCompressor />
         </Route>
         <Route path="/">
           <Home />
@@ -56,10 +62,10 @@ function Navtop() {
                   <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/webp">WebP Converter</a>
+                  <a class="nav-link" href="/webp">Any to WebP</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/heic">HEIC Converter</a>
+                  <a class="nav-link" href="/heic">HEIC to JPG</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/compressor">Image Compressor</a>
@@ -120,8 +126,8 @@ function Home() {
       <h1 class="display-3">Welcome to the web tools portal by Gates Sweeney</h1>
       <p class="display-5">Choose a tool to begin</p>
       <div class="flex-horiz">
-        <a type="button" class="btn btn-primary btn-lg" href="/webp">WebP Image Converter</a>
-        <a type="button" class="btn btn-primary btn-lg" href="/heic">HEIC Image Converter</a>
+        <a type="button" class="btn btn-primary btn-lg" href="/webp">Any to WebP Image Converter</a>
+        <a type="button" class="btn btn-primary btn-lg" href="/heic">HEIC to JPG Image Converter</a>
         <a type="button" class="btn btn-primary btn-lg" href="/compressor">Image Compressor</a>
         <a type="button" class="btn btn-primary btn-lg" href="/">More Coming Soon</a>
       </div>

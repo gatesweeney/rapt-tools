@@ -11,7 +11,7 @@ var compression = 0.7;
 function Webp() {
 
 
-  document.title = 'WebP Converter'; 
+  document.title = 'Any to WebP'; 
 
 
 
@@ -43,7 +43,7 @@ function Webp() {
 
     return (
         <div>
-          <h1 class="display-3">WebP Converter</h1><br></br>
+          <h1 class="display-3">Any to WebP Converter</h1><br></br>
 
           <div class="container-md">
             <label id="compression-label" for="compression" class="form-label">Compression: 0.7:1 (default)</label><br></br>
