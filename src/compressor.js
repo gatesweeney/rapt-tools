@@ -139,6 +139,16 @@ async function processFiles(files) {
 
   for (let f = 0; f < files.length; f++) {
 
+    window.dataLayer.push({
+      event: 'image-conversion',
+      eventProps: {
+          category: 'conversions',
+          action: 'convert',
+          label: 'image',
+          value: 1
+      }
+    });
+
     prcnt = parseInt((f / files.length) * 100);
 
     $('#image-now').text(String(f + 1));

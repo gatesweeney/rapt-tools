@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import ReactGA from 'react-ga';
+import React from "react";
+import TagManager from 'react-gtm-module'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"; // Removed "Link"
 import { Webp } from "./webp";
 import { HEIC } from "./heic";
@@ -8,13 +8,11 @@ import { VideoCompressor } from "./videoCompressor";
 import './App.css'
 
 function App() {
-  //Analytics
-  ReactGA.initialize('G-6MWVGFTCPW');
 
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname + window.location.search);
-  }, []);
-
+  const tagManagerArgs = {
+    gtmId: 'G-6MWVGFTCPW'
+  }
+  TagManager.initialize(tagManagerArgs)
 
   document.title = "RAPT TOOLS"
 
