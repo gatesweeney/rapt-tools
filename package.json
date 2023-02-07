@@ -21,8 +21,7 @@
     "react-native-compressor-with-h265": "^2.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "webp-converter-clientside": "^1.0.1",
-    "yarn": "^1.22.19"
+    "webp-converter-clientside": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
