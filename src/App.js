@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactGA from 'react-ga';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"; // Removed "Link"
 import { Webp } from "./webp";
@@ -10,6 +10,10 @@ import './App.css'
 function App() {
   //Analytics
   ReactGA.initialize('G-6MWVGFTCPW');
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
 
 
   document.title = "RAPT TOOLS"
