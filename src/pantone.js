@@ -34,14 +34,8 @@ function Pantone() {
               <input className="btn btn-outline-primary" id="btn-name" type="submit"></input>
           </form>
         </div>
-        <div id="results">
-          <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
-          <div id="loading">Processing <span id="image-now">0</span> / <span id="total-images">0</span> images.</div>
-          <br />
-          <div id="myProgress">
-            <div id="myBar"></div>
-          </div>
-          <div id="percent"><span>0</span>%</div>
+        <div id="loading">
+          <br></br><div className="lds-ring"><div></div><div></div><div></div><div></div></div>
         </div>
         <div className="container-md flex-grid">
             
@@ -73,7 +67,42 @@ async function initialize() {
         }
     );
 
+    const array = Object.values(idj);
 
+    for (let i = 0; i < array.length; i++) {
+
+        var name = array[i].name;
+        name = name.replace('-', ' ');
+        var hex = (array[i].hex).toUpperCase();
+
+        var pantone = new simpleColorConverter({
+            color: hex, 
+            to: 'pantone'
+        })
+
+        var rgba = new simpleColorConverter({
+            color: hex, 
+            to: 'rgba'
+        })
+
+        var cmyk = new simpleColorConverter({
+            color: hex, 
+            to: 'cmyk'
+        })
+
+        rgba = `${rgba.color.r}, ${rgba.color.g}, ${rgba.color.b}, ${rgba.color.a}`
+
+        cmyk = `${cmyk.color.c}, ${cmyk.color.m}, ${cmyk.color.y}, ${cmyk.color.k}`
+
+
+        pastele(name, hex, rgba, cmyk, pantone);        
+
+    }
+
+    $('#loading').hide();
+
+
+    hovers();
 
     $(document).on("submit", "#name-form", function(e) {
         e.preventDefault();
@@ -95,8 +124,6 @@ function processResults(array) {
             to: 'pantone'
         })
 
-        console.log(pantone);
-
         var rgba = new simpleColorConverter({
             color: hex, 
             to: 'rgba'
@@ -106,8 +133,6 @@ function processResults(array) {
             color: hex, 
             to: 'cmyk'
         })
-
-        console.log(cmyk.color.c)
 
         rgba = `${rgba.color.r}, ${rgba.color.g}, ${rgba.color.b}, ${rgba.color.a}`
 
@@ -126,12 +151,14 @@ function pastele(name, hex, rgb, cmyk, pantone) {
     // Builds element to be appended and puts it in DOM
     var element = (
         `<div class="colorbox">
-                <div class="color" style="background-color: #${hex}"></div>
+                <div class="color" style="background-color: #${hex}"><p>Click and hold to preview</p></div>
                 <h5>${name}</h5>
                 <button class="btn btn-secondary btn-sm copy hex">HEX: <span>#${hex}</span></button>
                 <button class="btn btn-secondary btn-sm copy rgb">RGB: <span>${rgb}</span></button>
                 <button class="btn btn-secondary btn-sm copy cmyk">CMYK: <span>${cmyk}</span></button>
                 <button class="btn btn-secondary btn-sm copy pantone">PAN: <span>${pantone.color}</span></button>
+                <div class="color-full" style="background-color: #${hex};"><div>
+
         </div>`
     )
 
@@ -142,9 +169,27 @@ function hovers() {
     // Hover Event handlers. Stores existing text and replaces with "copy"
     var curr;
 
+
     $(".copy").on("mouseenter", function() {
         curr = $(this).text();
         $(this).text('Click to Copy');
+    })
+
+    //Full screen color preview and info to do so.
+    $(".color").on('mousedown', function() {
+        $(this).siblings('.color-full').show()
+    })
+
+    $(".color").on('mouseup', function() {
+        $(this).siblings('.color-full').hide()
+    })
+    // "Click to show full preview" hover events
+    $(".color").on('mouseenter', function(){
+        $(this).children('p').show();
+    })
+
+    $(".color").on('mouseleave', function(){
+        $(this).children('p').hide();
     })
 
     $('.copy').on('click', function() {
