@@ -44,15 +44,7 @@ function Pantone() {
           <div id="percent"><span>0</span>%</div>
         </div>
         <div className="container-md flex-grid">
-            <div className="colorbox">
-                <div className="color"></div>
-                <h5>color name</h5>
-
-                <button className="btn btn-secondary btn-sm copy hex">HEX: <span></span></button><br></br>
-                <button className="btn btn-secondary btn-sm copy rgb">RGB: <span></span></button><br></br>
-                <button className="btn btn-secondary btn-sm copy cmyk">CMYK: <span></span></button><br></br>
-
-            </div>
+            
         </div>
       </div>
     );
