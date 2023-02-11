@@ -40,6 +40,8 @@
 
 #results {  display: none;  }
 
+#no-results {   display: none;   }
+
 #finished {  display: none;  }
 
 #uploader {

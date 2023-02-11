@@ -13,6 +13,8 @@ function Pantone() {
     initialize();
 
     $(document).on('click', "#btn-name", async function() {
+        // hide error message
+        $("#no-results").hide()
         var query = String($('#pName').val());
         console.log('query', query);
         var results = search(query);
@@ -40,6 +42,7 @@ function Pantone() {
         <div className="container-md flex-grid">
             
         </div>
+        <h4 id="no-results">No Results...</h4>
       </div>
     );
 
@@ -54,12 +57,18 @@ function search(query, type) {
 
     const searcher = new JSONHeroSearch(idj);
     var result = searcher.search(query);
+    console.log(result);
+    // if search fails show message
+    if (result.length === 0) {$("#no-results").show()}
     return result; 
 }
 
 
 // Just to get page ready
 async function initialize() {
+    // hide error messages
+    $("#no-results").hide()
+
     await $.getJSON(database,
         function (data, textStatus, jqXHR) {
             idj = data;
