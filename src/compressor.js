@@ -60,40 +60,40 @@ function Compressor() {
 
     return (
         <div>
-          <h1 class="display-3">Image Compressor</h1><br></br>
+          <h1 className="display-3">Image Compressor</h1><br></br>
 
           <h1 id="finished">Finished!</h1>
 
-          <div class="container-md" id="settings">
-            <h3 class="display-6">Settings</h3>
+          <div className="container-md" id="settings">
+            <h3 className="display-6">Settings</h3>
             <br></br>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input setting" type="checkbox" id="keepRes" value="option1"></input>
-              <label class="form-check-label" for="keepRes">Maintain Resolution</label>
+            <div className="form-check form-check-inline">
+              <input className="form-check-input setting" type="checkbox" id="keepRes" value="option1"></input>
+              <label className="form-check-label" for="keepRes">Maintain Resolution</label>
             </div>
             <br></br><br></br>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Max Size</span>
+            <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Max Size</span>
                 </div>
-                <input  id="maxSize" type="text" class="form-control setting" placeholder="4MB (default)"></input>
+                <input  id="maxSize" type="text" className="form-control setting" placeholder="4MB (default)"></input>
             </div>
 
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" >Max Width/Height</span>
+            <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text" >Max Width/Height</span>
                 </div>
-                <input id="maxRes" type="text" class="form-control setting" placeholder="5000PX (Default = undefined)"></input>
+                <input id="maxRes" type="text" className="form-control setting" placeholder="5000PX (Default = undefined)"></input>
             </div>
           </div>
 
           <br></br>
-          <div class="mb-3">
-              <input type="file" multiple class="form-control" id="uploader" accept="image/*" disabled=""></input>
+          <div className="mb-3">
+              <input type="file" multiple className="form-control" id="uploader" accept="image/*" disabled=""></input>
               <br></br><a id="reload" href="/compressor">Reload</a>
           </div>
           <div id="results">
-            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
             <div id="loading">Processing <span id="image-now">0</span> / <span id="total-images">0</span> images.</div>
             <br />
             <div id="myProgress">

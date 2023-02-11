@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"; // Re
 import { Webp } from "./webp";
 import { HEIC } from "./heic";
 import { Compressor } from "./compressor";
-import { VideoCompressor } from "./videoCompressor";
+import { Pantone } from "./pantone";
 import './App.css'
 
 function App() {
@@ -19,21 +19,21 @@ function App() {
   return (
     <Router>
       <Navtop />
-      <div class="page-wrap">
+      <div className="page-wrap">
       {/*<Sidebar />*/}
-      <div class="main-content">
+      <div className="main-content">
       <Switch>
         <Route path="/heic">
           <HEIC />
+        </Route>
+        <Route path="/pantone">
+          <Pantone />
         </Route>
         <Route path="/webp">
           <Webp />
         </Route>
         <Route path="/compressor">
           <Compressor />
-        </Route>
-        <Route path="/video">
-          <VideoCompressor />
         </Route>
         <Route path="/">
           <Home />
@@ -50,27 +50,30 @@ export default App;
 
 function Navtop() {
   return (
-    <nav class="navbar navbar-expand-lg bg-light">
-          <div class="container-fluid">
-            <a class="navbar-brand" href="/">
-              <img src="https://uploads-ssl.webflow.com/60d4c76fab23c390f78ec70e/60d4cd3342da20ef0ba3ba9e_rapt-black-thick-14-p-500.png" height="30" class="d-inline-block align-top" alt="logo" loading="lazy"></img>
+    <nav className="navbar navbar-expand-lg bg-light">
+          <div className="container-fluid">
+            <a className="navbar-brand" href="/">
+              <img src="https://uploads-ssl.webflow.com/60d4c76fab23c390f78ec70e/60d4cd3342da20ef0ba3ba9e_rapt-black-thick-14-p-500.png" height="30" className="d-inline-block align-top" alt="logo" loading="lazy"></img>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/">Home</a>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                <li className="nav-item">
+                  <a className="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/webp">Any to WebP</a>
+                <li className="nav-item">
+                  <a className="nav-link" href="/webp">Any to WebP</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/heic">HEIC to JPG</a>
+                <li className="nav-item">
+                  <a className="nav-link" href="/heic">HEIC to JPG</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/compressor">Image Compressor</a>
+                <li className="nav-item">
+                  <a className="nav-link" href="/compressor">Image Compressor</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/pantone">Pantone</a>
                 </li>
               </ul>
             </div>
@@ -82,34 +85,34 @@ function Navtop() {
 /*
 function Sidebar() {
   return (
-    <div class="d-flex flex-column flex-shrink-0 bg-light sidebar">
-      <a href="/" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
-      <img src="https://uploads-ssl.webflow.com/60d4c76fab23c390f78ec70e/60d4cd3342da20ef0ba3ba9e_rapt-black-thick-14-p-500.png" height="30" class="d-inline-block align-top" alt="logo" loading="lazy"></img>
+    <div className="d-flex flex-column flex-shrink-0 bg-light sidebar">
+      <a href="/" className="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
+      <img src="https://uploads-ssl.webflow.com/60d4c76fab23c390f78ec70e/60d4cd3342da20ef0ba3ba9e_rapt-black-thick-14-p-500.png" height="30" className="d-inline-block align-top" alt="logo" loading="lazy"></img>
       </a>
-      <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-        <li class="nav-item">
-          <a href="/" class="nav-link active py-3 border-bottom" aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-            <svg class="bi" width="24" height="24" role="img" aria-label="Home"></svg>
+      <ul className="nav nav-pills nav-flush flex-column mb-auto text-center">
+        <li className="nav-item">
+          <a href="/" className="nav-link active py-3 border-bottom" aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+            <svg className="bi" width="24" height="24" role="img" aria-label="Home"></svg>
           </a>
         </li>
         <li>
-          <a href="/" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
-            <svg class="bi" width="24" height="24" role="img" aria-label="Dashboard"></svg>
+          <a href="/" className="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
+            <svg className="bi" width="24" height="24" role="img" aria-label="Dashboard"></svg>
           </a>
         </li>
         <li>
-          <a href="/" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
-            <svg class="bi" width="24" height="24" role="img" aria-label="Orders"></svg>
+          <a href="/" className="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+            <svg className="bi" width="24" height="24" role="img" aria-label="Orders"></svg>
           </a>
         </li>
         <li>
-          <a href="/" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
-            <svg class="bi" width="24" height="24" role="img" aria-label="Products"></svg>
+          <a href="/" className="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
+            <svg className="bi" width="24" height="24" role="img" aria-label="Products"></svg>
           </a>
         </li>
         <li>
-          <a href="/" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Customers">
-            <svg class="bi" width="24" height="24" role="img" aria-label="Customers"></svg>
+          <a href="/" className="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Customers">
+            <svg className="bi" width="24" height="24" role="img" aria-label="Customers"></svg>
           </a>
         </li>
       </ul>
@@ -125,13 +128,13 @@ function Home() {
   return (
     <div>
       <title>RAPT TOOLS</title>
-      <h1 class="display-3">Welcome to the web tools portal by Gates Sweeney</h1>
-      <p class="display-5">Choose a tool to begin</p>
-      <div class="flex-horiz">
-        <a type="button" class="btn btn-primary btn-lg" href="/webp">Any to WebP Image Converter</a>
-        <a type="button" class="btn btn-primary btn-lg" href="/heic">HEIC to JPG Image Converter</a>
-        <a type="button" class="btn btn-primary btn-lg" href="/compressor">Image Compressor</a>
-        <a type="button" class="btn btn-primary btn-lg" href="/">More Coming Soon</a>
+      <h1 className="display-3">Welcome to the web tools portal by Gates Sweeney</h1>
+      <p className="display-5">Choose a tool to begin</p>
+      <div className="flex-horiz">
+        <a type="button" className="btn btn-primary btn-lg" href="/webp">Any to WebP Image Converter</a>
+        <a type="button" className="btn btn-primary btn-lg" href="/heic">HEIC to JPG Image Converter</a>
+        <a type="button" className="btn btn-primary btn-lg" href="/compressor">Image Compressor</a>
+        <a type="button" className="btn btn-primary btn-lg" href="/pantone">Pantone</a>
       </div>
     </div>
   )

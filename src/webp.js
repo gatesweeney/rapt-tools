@@ -43,21 +43,21 @@ function Webp() {
 
     return (
         <div>
-          <h1 class="display-3">Any to WebP Converter</h1><br></br>
+          <h1 className="display-3">Any to WebP Converter</h1><br></br>
 
-          <div class="container-md">
-            <label id="compression-label" for="compression" class="form-label">Compression: 0.7:1 (default)</label><br></br>
-            <input id="compression" type="range" onInput={compressionVal} class="form-range" min="0.1" max="1" step="0.1"></input>
+          <div className="container-md">
+            <label id="compression-label" for="compression" className="form-label">Compression: 0.7:1 (default)</label><br></br>
+            <input id="compression" type="range" onInput={compressionVal} className="form-range" min="0.1" max="1" step="0.1"></input>
             <br></br><br></br>
           </div>
 
           <h1 id="finished">Finished!</h1>
-          <div class="mb-3">
-              <input type="file" multiple class="form-control" id="uploader" accept="image/*" disabled=""></input>
+          <div className="mb-3">
+              <input type="file" multiple className="form-control" id="uploader" accept="image/*" disabled=""></input>
               <br></br><a id="reload" href="/webp">Reload</a>
           </div>
           <div id="results">
-            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
             <div id="loading">Processing <span id="image-now">0</span> / <span id="total-images">0</span> images.</div>
             <br />
             <div id="myProgress">

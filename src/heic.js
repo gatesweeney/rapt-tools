@@ -40,15 +40,15 @@ function HEIC() {
 
     return (
         <div>
-          <h1 class="display-3">HEIC to JPG Converter</h1><br></br>
+          <h1 className="display-3">HEIC to JPG Converter</h1><br></br>
 
           <h1 id="finished">Finished!</h1>
-          <div class="mb-3">
-              <input type="file" multiple class="form-control" id="uploader" accept="image/heic" disabled=""></input>
+          <div className="mb-3">
+              <input type="file" multiple className="form-control" id="uploader" accept="image/heic" disabled=""></input>
               <br></br><a id="reload" href="/heic">Reload</a>
           </div>
           <div id="results">
-            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
             <div id="loading">Processing <span id="image-now">0</span> / <span id="total-images">0</span> images.</div>
             <br />
             <div id="myProgress">

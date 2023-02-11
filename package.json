@@ -5,14 +5,18 @@
   "dependencies": {
     "@ffmpeg/core": "^0.11.0",
     "@ffmpeg/ffmpeg": "^0.11.6",
+    "@jsonhero/fuzzy-json-search": "^0.2.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "browser-image-compression": "^2.0.0",
     "file-saver": "^2.0.5",
+    "fs": "^0.0.1-security",
+    "fuzzy-search": "^3.2.1",
     "heic2any": "^0.0.3",
     "jquery": "^3.6.3",
     "jszip": "^3.10.1",
+    "lodash.get": "^4.4.2",
     "media-converter": "^1.1.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -22,6 +26,7 @@
     "react-native-compressor-with-h265": "^2.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "simple-color-converter": "^2.1.13",
     "webp-converter-clientside": "^1.0.1"
   },
   "scripts": {
