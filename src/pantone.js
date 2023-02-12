@@ -186,11 +186,44 @@ function hovers() {
     // Hover Event handlers. Stores existing text in 'curr' and replaces with "copy"
     var curr;
 
+    // On hover show instruction and store original value in 'curr'
 
     $(".copy").on("mouseenter", function() {
         curr = $(this).text();
         $(this).text('Click to Copy');
     })
+
+    $(".colorbox").children('p').on("mouseenter", function() {
+        curr = $(this).text();
+        $(this).text('Click to Copy');
+    })
+    
+
+    // returns text to original on mouse leave
+    $(".copy").on("mouseleave", function() {
+        $(this).text(curr);
+    })
+
+    $(".colorbox").children('p').on("mouseleave", function() {
+        $(this).text(curr);
+    })
+
+    //Change to say 'copied' on click
+
+    $('.copy').on('click', function() {
+        var toCopy = curr.split(': ')[1];
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(toCopy);
+        $(this).text('Copied!');
+    })
+
+    $('.colorbox').children('p').on('click', function() {
+        var toCopy = curr;
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(toCopy);
+        $(this).text('Copied!');
+    })
+
 
     //Full screen color preview and info to do so.
     $(".color").on('mousedown', function() {
@@ -200,6 +233,8 @@ function hovers() {
     $(document).on('mouseup', function() {
         $('.color-full').each(function() {$(this).hide()})
     })
+
+
     // "Click to show full preview" hover events
     $(".color").on('mouseenter', function(){
         $(this).children('p').show();
@@ -209,17 +244,9 @@ function hovers() {
         $(this).children('p').hide();
     })
 
-    $('.copy').on('click', function() {
-        var toCopy = curr.split(': ')[1];
-        // Copy the text inside the text field
-        navigator.clipboard.writeText(toCopy);
-        $(this).text('Copied!');
-    })
+    
 
-    // returns text to original on mouse leave
-    $(".copy").on("mouseleave", function() {
-        $(this).text(curr);
-    })
+    
 
 
 }

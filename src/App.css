@@ -194,3 +194,5 @@ h5 {
 #btn-name {  border-top-left-radius: 0px; border-bottom-left-radius: 0px;   }
 
 #pName { border-right: 0px;}
+
+.colorbox > p {cursor: pointer;}
