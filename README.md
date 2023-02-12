@@ -12,4 +12,4 @@ Compress images to their existing type. Can set max size or max resolution on th
 ## Pantone
 View and Search all Pantone swatches, copy HEX, RGBA, CMYK. Click and hold on a color to show it fullscreen.
 
-Available publicly at [https://tools.raptlex.com]
+Available publicly at https://tools.raptlex.com
