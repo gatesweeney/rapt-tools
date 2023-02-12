@@ -27,14 +27,14 @@ function Pantone() {
     return (
         <div>
         <h1 className="display-3">Pantone Search</h1><br></br>
-
+        <p>Search from (I'm pretty sure) all Pantones via Name, 12-3456 code format, 123C code format, or HEX code. Will return non-exact search results</p>
         <div className="container-md" id="settings">
           <br></br>
           <form id="name-form" className="input-group mb-3">
               <div className="input-group-prepend">
-                <span className="input-group-text">Pantone Name/ID/HEX</span>
+                <span className="input-group-text">Search</span>
               </div>
-              <input  id="pName" type="text" className="form-control setting" placeholder="snow white/11-0703" autoFocus={true}></input>
+              <input  id="pName" type="text" className="form-control setting" placeholder="snow white/11-0703/#F4F5F0/201C" autoFocus={true}></input>
               <input className="btn btn-outline-primary" id="btn-name" type="submit"></input>
           </form>
         </div>

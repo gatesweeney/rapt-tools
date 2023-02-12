@@ -190,3 +190,7 @@ h5 {
   pointer-events: none;
   display: none;
 }
+
+#btn-name {  border-top-left-radius: 0px; border-bottom-left-radius: 0px;   }
+
+#pName { border-right: 0px;}
