@@ -83,6 +83,7 @@ async function initialize() {
         var name = array[i].name;
         name = name.replace('-', ' ');
         var hex = (array[i].hex).toUpperCase();
+        var code = keys[i];
 
         var pantone = new simpleColorConverter({
             color: hex, 
@@ -107,7 +108,7 @@ async function initialize() {
         cmyk = `${cmyk.color.c}, ${cmyk.color.m}, ${cmyk.color.y}, ${cmyk.color.k}`
 
 
-        pastele(name, hex, rgba, cmyk, pantone);        
+        pastele(code, name, hex, rgba, cmyk, pantone);        
 
     }
     
@@ -153,7 +154,7 @@ function processResults(array) {
         cmyk = `${cmyk.color.c}, ${cmyk.color.m}, ${cmyk.color.y}, ${cmyk.color.k}`
 
 
-        pastele(name, hex, rgba, cmyk, pantone);        
+        pastele(path, name, hex, rgba, cmyk, pantone);        
 
     }
     // Add hover events
@@ -162,12 +163,13 @@ function processResults(array) {
 
 }
 
-function pastele(name, hex, rgb, cmyk, pantone) {
+function pastele(code, name, hex, rgb, cmyk, pantone) {
     // Builds element to be appended and puts it in DOM
     var element = (
         `<div class="colorbox">
                 <div class="color" style="background-color: #${hex}"><p>Click and hold to preview</p></div>
                 <h5>${name}</h5>
+                <p>${code}</p>
                 <button class="btn btn-secondary btn-sm copy hex">HEX: <span>#${hex}</span></button>
                 <button class="btn btn-secondary btn-sm copy rgb">RGB: <span>${rgb}</span></button>
                 <button class="btn btn-secondary btn-sm copy cmyk">CMYK: <span>${cmyk}</span></button>
