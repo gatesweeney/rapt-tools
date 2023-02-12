@@ -16,10 +16,12 @@ function Pantone() {
         // hide error message
         $("#no-results").hide()
         var query = String($('#pName').val());
+        if (query === '') {window.location.reload()} else {
         console.log('query', query);
         var results = search(query);
         console.log('result\n', results);
         processResults(results);
+        }
     })
 
     return (
@@ -32,7 +34,7 @@ function Pantone() {
               <div className="input-group-prepend">
                 <span className="input-group-text">Pantone Name/ID/HEX</span>
               </div>
-              <input  id="pName" type="text" className="form-control setting" placeholder="snow white/11-0703"></input>
+              <input  id="pName" type="text" className="form-control setting" placeholder="snow white/11-0703" autoFocus={true}></input>
               <input className="btn btn-outline-primary" id="btn-name" type="submit"></input>
           </form>
         </div>
@@ -66,17 +68,15 @@ function search(query, type) {
 
 // Just to get page ready
 async function initialize() {
-    // hide error messages
-    $("#no-results").hide()
 
     await $.getJSON(database,
         function (data, textStatus, jqXHR) {
             idj = data;
-            console.log(data);
         }
     );
 
     const array = Object.values(idj);
+    const keys = Object.keys(idj);
 
     for (let i = 0; i < array.length; i++) {
 
@@ -99,14 +99,18 @@ async function initialize() {
             to: 'cmyk'
         })
 
-        rgba = `${rgba.color.r}, ${rgba.color.g}, ${rgba.color.b}, ${rgba.color.a}`
+        var obj = get(idj, keys[i]);
 
+        obj.pantone = pantone.color;
+
+        rgba = `${rgba.color.r}, ${rgba.color.g}, ${rgba.color.b}, ${rgba.color.a}`
         cmyk = `${cmyk.color.c}, ${cmyk.color.m}, ${cmyk.color.y}, ${cmyk.color.k}`
 
 
         pastele(name, hex, rgba, cmyk, pantone);        
 
     }
+    
 
     $('#loading').hide();
 
@@ -116,6 +120,7 @@ async function initialize() {
     $(document).on("submit", "#name-form", function(e) {
         e.preventDefault();
     })
+
 }
 
 function processResults(array) {
@@ -153,6 +158,7 @@ function processResults(array) {
     }
     // Add hover events
     hovers();
+    
 
 }
 
@@ -175,7 +181,7 @@ function pastele(name, hex, rgb, cmyk, pantone) {
 }
 
 function hovers() {
-    // Hover Event handlers. Stores existing text and replaces with "copy"
+    // Hover Event handlers. Stores existing text in 'curr' and replaces with "copy"
     var curr;
 
 
