@@ -195,8 +195,8 @@ function hovers() {
         $(this).siblings('.color-full').show()
     })
 
-    $(".color").on('mouseup', function() {
-        $(this).siblings('.color-full').hide()
+    $(document).on('mouseup', function() {
+        $('.color-full').each(function() {$(this).hide()})
     })
     // "Click to show full preview" hover events
     $(".color").on('mouseenter', function(){
