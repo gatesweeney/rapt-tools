@@ -55,8 +55,11 @@ export { Pantone };
 
 function search(query, type) {
 
+
+    //Each time a search begins empty the container
     $('.flex-grid').empty();
 
+    // Get fuxxy results
     const searcher = new JSONHeroSearch(idj);
     var result = searcher.search(query);
     console.log(result);
@@ -69,15 +72,20 @@ function search(query, type) {
 // Just to get page ready
 async function initialize() {
 
+    //Fetch the data
     await $.getJSON(database,
         function (data, textStatus, jqXHR) {
             idj = data;
         }
     );
 
+// Store objects and keys
+
     const array = Object.values(idj);
     const keys = Object.keys(idj);
 
+
+// Put all colors in the DOM
     for (let i = 0; i < array.length; i++) {
 
         var name = array[i].name;
