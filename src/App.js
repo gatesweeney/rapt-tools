@@ -5,6 +5,7 @@ import { Webp } from "./webp";
 import { HEIC } from "./heic";
 import { Compressor } from "./compressor";
 import { Pantone } from "./pantone";
+import { Torrent } from "./torrent/Torrent"
 import './App.css'
 
 function App() {
@@ -34,6 +35,9 @@ function App() {
         </Route>
         <Route path="/compressor">
           <Compressor />
+        </Route>
+        <Route path="/torrent">
+          <Torrent />
         </Route>
         <Route path="/">
           <Home />
