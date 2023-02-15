@@ -15,7 +15,6 @@ var allListings = [];
 
 function Torrent() {
 
-
   $('#complete').hide();
   // State to store parsed data
   const [parsedData, setParsedData] = useState([]);
@@ -129,8 +128,9 @@ function Torrent() {
         </br>
         <div className="flex-horiz">
           <button className="btn btn-outline-primary" id="submit-torrents">Send to Seedbox</button>
-          <button className="btn btn-outline-primary" id="watch-torrents">Stream Now</button>
+          <a className="btn btn-outline-primary" id="watch-torrents" href="/torrent">Reload</a>
           <button className="btn btn-outline-primary" id="get-magnets">Get Magnet(s) - Unavailable </button>
+
         </div>
       </div>
     );

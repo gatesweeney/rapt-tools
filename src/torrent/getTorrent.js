@@ -6,16 +6,17 @@ let titles = [];
 let errors = [];
 let allListings = [];
 var roll = [];
+var masterList =[];
 
 export default async function getTorrents(csvData, site, limit, seedMin) {
 
 
     $('#results-torrent').show();
+    $('#single-form').hide();
 
     var domain = 'api.gatesweeney.com'
     var category = 'Movies'; 
     
-    var masterList =[];
 
     // Sets total movies
     $('#total-movies').text(String(csvData.length));
@@ -146,7 +147,7 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
 
 
             try {
-                desc = `Resolution: ${selection[0].resolution}p Size: ${selection[0].size} MBs Seeders: ${selection[0].seeds} | ${selection[0].title.slice(0, 40)}`;
+                desc = `Resolution: ${selection[0].resolution}p Size: ${selection[0].size} Seeders: ${selection[0].seeds} | Query: ${csvData[i]} | ${selection[0].title.slice(0, 40)}`;
                 allListings.push(selection);
                 title = selection[0].title;
                 titles.push(title);
@@ -157,7 +158,7 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
                 errors.push(csvData[i]);
                 title = '#';
                 selection[0] = 'null';
-                desc = "Couldn't find a listing for this query";
+                desc = "Couldn't find a listing for this query: " + csvData[i];
             }
 
             masterList.push(selection[0]);
@@ -168,7 +169,7 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
 
 
 
-            let ele = `<tr><td class="next-btn"><button class="btn btn-outline-primary btn-sm">NEXT</button></td><td class="fraction"></td><td class="info-row">${masterList.length - 1} <span>${desc}</span></td></tr>`;
+            let ele = `<tr><td class="prev-btn"><button class="btn btn-outline-primary btn-sm">PREV</button></td><td class="next-btn"><button class="btn btn-outline-primary btn-sm">NEXT</button></td><td class="fraction"></td><td class="info-row"><p style="display: none">${masterList.length - 1}</p><span>${desc}</span></td></tr>`;
 
 
             //Add row to column
@@ -194,48 +195,21 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
 
     // OnClick for each next button
     $(document).on("click", ".next-btn", function (ev) {
-        // Get correct row
-        var num = $(this).siblings('.info-row').html();
-        
-        
-
-        // Get number from text at beginning of row, and report it to console. Current index number for listing
-        num = parseInt(num.split(' ')[0]);
-        // Go ahead and advance to next listing.
-        
-
-        // Fetch results for current listing, and add to the index in the roll sheet or reset if at the end.
-        var array = allListings[num];
-        roll[num].index ++;
-
-        if (roll[num].index === array.length) {
-            roll[num].index = 0;
-        }
-
-        // Set index of current result being displayed for the current listing and show it in the UI.
-        var fraction = `<td>( ${roll[num].index + 1} / ${array.length} )</td>`;
-        $('.fraction').eq(num).html(fraction);
-
-
-        console.log('LISTING', num, 'RESULT', roll[num].index + 1);
-
-
-        var out = array[roll[num].index];
-
-        // Report current array result
-        console.log('CHANGED TO:\n', out);
-
-        //Modify the html for ease of use.
-        var descriptor = `Resolution: ${out.resolution}p Size: ${out.size} MBs Seeders: ${out.seeds} | ${out.title.slice(0, 40)}`;
-        $(this).siblings('.info-row').find('span').html(descriptor);
-
-        // Modify the masterList
-        masterList[num] = out;
-        console.log('MASTER LIST MODIFIED\n', masterList);
-
+        var ele = $(this);
+        var num = parseInt($(this).siblings('.info-row').children('p').text());
+        cycle(true, num, ele);
     });
 
-    if (masterList.length < 2) {  $('#watch-torrents').show();  }
+     // OnClick for each next button
+     $(document).on("click", ".prev-btn", function (ev) {
+        var ele = $(this);
+        var num = parseInt($(this).siblings('.info-row').children('p').text());
+        cycle(false, num, ele);
+    });
+
+    
+
+    if (masterList.length < 2) {  $('#watch-torrents').show();  } else {  $('#watch-torrents').show();  }
 
     $('#submit-torrents').show();
 
@@ -253,6 +227,49 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
 
     return allListings;
 
+}
+
+function cycle(direction, num, ele) {
+    // Go ahead and advance to next listing.
+    console.log('post', num)
+
+
+    // Fetch results for current listing, and add to the index in the roll sheet or reset if at the end.
+    var array = allListings[num];
+    if (direction) {
+        roll[num].index ++;
+    } else {
+        roll[num].index --;
+    }
+
+    if (roll[num].index > array.length - 1) {
+        roll[num].index = array.length - 1;
+    }
+
+    if (roll[num].index < 0) {
+        roll[num].index = 0;
+    }
+
+    // Set index of current result being displayed for the current listing and show it in the UI.
+    var fraction = `<td>( ${roll[num].index + 1} / ${array.length} )</td>`;
+    $('.fraction').eq(num).html(fraction);
+
+
+    console.log('LISTING', num, 'RESULT', roll[num].index + 1);
+
+
+    var out = array[roll[num].index];
+
+    // Report current array result
+    console.log('CHANGED TO:\n', out);
+
+    //Modify the html for ease of use.
+    var descriptor = `Resolution: ${out.resolution}p Size: ${out.size} Seeders: ${out.seeds} | ${out.title.slice(0, 40)}`;
+    ele.siblings('.info-row').find('span').html(descriptor);
+
+    // Modify the masterList
+    masterList[num] = out;
+    console.log('MASTER LIST MODIFIED\n', masterList);
 }
 
 
