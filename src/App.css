@@ -38,11 +38,12 @@
 }
 
 
-#results {  display: none;  }
+#results-torrent {  display: none;  }
 
 #no-results {   display: none;   }
 
 #finished {  display: none;  }
+
 
 #uploader {
   width: 400px;
@@ -56,7 +57,7 @@
   max-width: 500px;
 }
 
-#submit-torrents{ display: none; }
+#submit-torrents, #watch-torrents { display: none; }
 
 #myBar {
   width: 0%;
@@ -123,6 +124,24 @@
   align-items: flex-start;
   gap: 10px;
   }
+
+.flex-horiz {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-align-content: stretch;
+  -ms-flex-line-pack: stretch;
+  align-content: stretch;
+}
 
 .colorbox {
   width: 215px;

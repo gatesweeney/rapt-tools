@@ -15,11 +15,10 @@ var allListings = [];
 
 function Torrent() {
 
+
   $('#complete').hide();
-  $('#submit-torrents').hide();
   // State to store parsed data
   const [parsedData, setParsedData] = useState([]);
-  console.log(parsedData);
   //State to store table Column name
   const [tableRows, setTableRows] = useState([]);
 
@@ -71,6 +70,7 @@ function Torrent() {
   $(document).on("click", "#torrent-single-submit", function(e){  e.preventDefault();  })
 
   async function singleTorrent() {
+     
     var query = $("#torrent-query").val();
     if (query !== '') {
       var movieList = [query];
@@ -121,27 +121,16 @@ function Torrent() {
         <br />
         <table>
           <thead>
-            <tr>
-              {tableRows.map((rows, index) => {
-                return <th key={index}>{rows}</th>;
-              })}
-            </tr>
           </thead>
-          <tbody>
-            {values.map((value, index) => {
-              return (
-                <tr className="tRow" key={index}>
-                  {value.map((val, i) => {
-                    return <td key={i}>{val}</td>;
-                  })}
-                </tr>
-              );
-            })}
+          <tbody id="table-body">
           </tbody>
         </table>
         <br>
         </br>
-        <button className="btn btn-outline-primary" id="submit-torrents">Send to Seedbox</button>
+        <div className="flex-horiz">
+          <button className="btn btn-outline-primary" id="submit-torrents">Send to Seedbox</button>
+          <button className="btn btn-outline-primary" id="watch-torrents">Stream Now</button>
+        </div>
       </div>
     );
     return out;
@@ -153,3 +142,17 @@ function Torrent() {
 export { Torrent };
 
 
+/*
+
+{values.map((value, index) => {
+              return (
+                <tr className="tRow" key={index}>
+                  {value.map((val, i) => {
+                    return <td key={i}>{val}</td>;
+                  })}
+                </tr>
+              );
+            })}
+
+
+            */

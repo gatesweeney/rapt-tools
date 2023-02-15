@@ -9,6 +9,9 @@ var roll = [];
 
 export default async function getTorrents(csvData, site, limit, seedMin) {
 
+
+    $('#results-torrent').show();
+
     var domain = 'gatesweeney.com'
     var category = 'Movies'; 
     
@@ -127,12 +130,6 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
                     });
                     console.log(selection);
 
-                } else {
-                    try {
-                        await picker(req, seedMin-5);
-                    } catch (error) {
-                        fallbackMessage = "Couldn't find a suitable listing for this query...";
-                    }
                 }
 
                 return options;
@@ -145,10 +142,11 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
             await picker(req, seedMin);
             
 
-            let desc = `Resolution: ${selection[0].resolution}p Size: ${selection[0].size} MBs Seeders: ${selection[0].seeds}`;
+            let desc;
 
 
             try {
+                desc = `Resolution: ${selection[0].resolution}p Size: ${selection[0].size} MBs Seeders: ${selection[0].seeds} | ${selection[0].title.slice(0, 40)}`;
                 allListings.push(selection);
                 title = selection[0].title;
                 titles.push(title);
@@ -170,11 +168,11 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
 
 
 
-            let ele = `<td class="info-row">${masterList.length - 1} <span>${desc} ${fallbackMessage}</span></td><td class="next-btn"><button class="btn btn-outline-primary btn-sm">NEXT</button></td><td class="fraction"></td>`;
+            let ele = `<tr><td class="next-btn"><button class="btn btn-outline-primary btn-sm">NEXT</button></td><td class="fraction"></td><td class="info-row">${masterList.length - 1} <span>${desc}</span></td></tr>`;
 
 
             //Add row to column
-            $('.tRow').eq(i).append(ele);
+            $('tbody').append(ele);
 
             return allListings;
         }
@@ -228,7 +226,7 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
         console.log('CHANGED TO:\n', out);
 
         //Modify the html for ease of use.
-        var descriptor = `Resolution: ${out.resolution}p Size: ${out.size} MBs Seeders: ${out.seeds}`;
+        var descriptor = `Resolution: ${out.resolution}p Size: ${out.size} MBs Seeders: ${out.seeds} | ${out.title.slice(0, 40)}`;
         $(this).siblings('.info-row').find('span').html(descriptor);
 
         // Modify the masterList
@@ -237,11 +235,20 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
 
     });
 
+    if (masterList.length < 2) {  $('#watch-torrents').show();  }
+
     $('#submit-torrents').show();
+
+    $('#watch-torrents').on('click', function () {
+        console.log('requesting stream\n', masterList[0]);
+        
+    });
 
     $('#submit-torrents').on('click', function(ev) {
         pushTorrents(masterList, domain);
     });
+
+    $('#results-torrent').hide();
 
 
     return allListings;
