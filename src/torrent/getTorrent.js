@@ -12,7 +12,7 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
 
     $('#results-torrent').show();
 
-    var domain = 'gatesweeney.com'
+    var domain = 'api.gatesweeney.com'
     var category = 'Movies'; 
     
     var masterList =[];
@@ -40,7 +40,7 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
         query = query.replace(/[^a-zA-Z0-9 ]/g, '');
         query = query.replaceAll(' ', '%20');
         // URL structure
-        var url = `http://${domain}/api/torrent-search/?search=${query}&limit=${limit}&category=${category}`
+        var url = `https://${domain}/api/torrent-search/?search=${query}&limit=${limit}&category=${category}`
 
         console.log(url);
 

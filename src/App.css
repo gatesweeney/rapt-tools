@@ -57,7 +57,8 @@
   max-width: 500px;
 }
 
-#submit-torrents, #watch-torrents { display: none; }
+/* Buttons */
+#submit-torrents, #watch-torrents,#get-magnets { display: none; }
 
 #myBar {
   width: 0%;
@@ -69,7 +70,7 @@
 
 
 .lds-ring {
-  display: inline-block;
+  display: none;
   position: relative;
   width: 30px;
   height: 30px;

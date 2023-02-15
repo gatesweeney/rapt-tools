@@ -130,6 +130,7 @@ function Torrent() {
         <div className="flex-horiz">
           <button className="btn btn-outline-primary" id="submit-torrents">Send to Seedbox</button>
           <button className="btn btn-outline-primary" id="watch-torrents">Stream Now</button>
+          <button className="btn btn-outline-primary" id="get-magnets">Get Magnet(s) - Unavailable </button>
         </div>
       </div>
     );

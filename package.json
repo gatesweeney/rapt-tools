@@ -28,7 +28,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "simple-color-converter": "^2.1.13",
-    "webp-converter-clientside": "^1.0.1"
+    "webp-converter-clientside": "^1.0.1",
+    "webtorrent": "^2.0.13"
   },
   "scripts": {
     "start": "react-scripts start",
