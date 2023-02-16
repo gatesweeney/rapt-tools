@@ -35,7 +35,10 @@ async function getJSON() {
       var removed = json.removed;
       var torrents = json.torrents;
 
-      if (torrents.length === 0 ){ $('.empty').show();  } else {
+      if (torrents.length === 0 ){
+        $('.empty').show();
+        $('.container').empty();
+      } else {
 
         $('.empty').hide();
 
