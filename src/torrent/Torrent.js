@@ -73,16 +73,14 @@ function Torrent() {
     var query = $("#torrent-query").val();
     if (query !== '') {
       var movieList = [query];
-      allListings = getTorrents(movieList, site, limit, seedMin);
+      getTorrents(movieList, site, limit, seedMin);
     }
   }
 
-  $('.masterList').html(allListings);
-
   var out = (
-      <div>
+      <div className="wrapper">
         <h1 className="display-3">Torrent Search</h1>
-        <p>You may upload a CSV file with the headers 'Movie' and 'Year', or search single movies below.</p>
+        <p>You may upload a CSV file with the headers 'Movie' and 'Year', or search single movies below. Hover over the torrent title to see the full length to verify details.</p>
         <p>To view the status of active torrents <a href="/seedstatus">click here</a></p>
         <input
           type="file"
@@ -129,9 +127,8 @@ function Torrent() {
         </br>
         <div className="flex-horiz">
           <button className="btn btn-outline-primary" id="submit-torrents">Send to Seedbox</button>
-          <a className="btn btn-outline-primary" id="watch-torrents" href="/torrent">Reload</a>
-          <button className="btn btn-outline-primary" id="get-magnets">Get Magnet(s) - Unavailable </button>
-
+          <a className="btn btn-outline-primary" id="reload" href="/torrent">New Search</a>
+          <button className="btn btn-outline-primary" id="log">Log Listings</button>
         </div>
       </div>
     );

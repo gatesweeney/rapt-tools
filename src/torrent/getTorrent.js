@@ -1,20 +1,19 @@
 import $ from "jquery";
 import pushTorrents from "./pushTorrents";
+import { Torrent } from "./Torrent";
 
-
-let titles = [];
-let errors = [];
 let allListings = [];
-var roll = [];
-var masterList =[];
+let noResults = [];
+var seedboxList =[];
 
 export default async function getTorrents(csvData, site, limit, seedMin) {
 
 
     $('#results-torrent').show();
     $('#single-form').hide();
+    $('.form-control').hide();
 
-    var domain = 'api.gatesweeney.com'
+    var domain = 'api.gatesweeney.com';
     var category = 'Movies'; 
     
 
@@ -46,16 +45,13 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
         console.log(url);
 
         $.ajaxSetup({
-            "error":function() { console.log('Error with the request has ocurred.')  }
+            "error":function() { console.log('Dummy Error with the request has ocurred.')  }
         });
 
-    // API Call
+        // API Call
         await $.getJSON(url, async function (req) {
 
-                var title = '#';
-                var fallbackMessage;
                 
-                var sizes = [];
                 var options = 0;
                 var selection = [];
 
@@ -63,15 +59,17 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
 
             async function picker(req, seedReq) {
                 for (let m = 0; m < req.length; m++) {
+                    var results = [];
                     // get size of item
                     var size = String(req[m].size);
-                    title = req[m].title;
+                    var title = req[m].title;
                     var resolution;
                     var season;
                     var episode;
 
                     var seeders = parseInt(req[m].seeds);
                     resolution = parseInt( title.match(/(2160p|1080p|720p|480p|240p)/) );
+                    if (isNaN(resolution)) {resolution = 100}
                     season = title.match(/([Ss]?([0-9]{1,2}))[Eex]/);
                     episode = title.match(/([Eex]([0-9]{2})(?:[^0-9]|$))/);
 
@@ -114,7 +112,6 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
                     if (sizeOut < 20000) { 
                         req[m].resolution = resolution;
                         selection.push(req[m]); 
-                        sizes.push(`Resolution: ${resolution}p Size: ${sizeNum} ${sizeUnit} - ${sizeOut} MBs Seeders: ${seeders}`);
                 }
                     
                     
@@ -129,8 +126,6 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
                         if (keyA > keyB) return 1;
                         return 0;
                     });
-                    console.log(selection);
-
                 }
 
                 return options;
@@ -141,135 +136,183 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
 
             // Pick the torrent, if there's no listings with seedMin seeders, check again with just 5.
             await picker(req, seedMin);
-            
-
-            let desc;
 
 
-            try {
-                desc = `Resolution: ${selection[0].resolution}p Size: ${selection[0].size} Seeders: ${selection[0].seeds} | Query: ${csvData[i]} | ${selection[0].title.slice(0, 40)}`;
-                allListings.push(selection);
-                title = selection[0].title;
-                titles.push(title);
-                roll.push({"index": 0})
-              }
-              catch(err) {
-                console.log(`******** Couldn't find movie: ${csvData[i]}`)
-                errors.push(csvData[i]);
-                title = '#';
-                selection[0] = 'null';
-                desc = "Couldn't find a listing for this query: " + csvData[i];
+            // If no results don't add to array but log errors.
+            if (selection.length) {
+                allListings.push({id: i, which: 0, results: selection, query: query.split('%20').join(' ')})
+            } else {
+                noResults.push(` - ${query.split('%20').join(' ')}`);
             }
-
-            masterList.push(selection[0]);
-
-
-            // Reporting for errors.
-            if (fallbackMessage === undefined) {fallbackMessage = '';}
-
-
-
-            let ele = `<tr><td class="prev-btn"><button class="btn btn-outline-primary btn-sm">PREV</button></td><td class="next-btn"><button class="btn btn-outline-primary btn-sm">NEXT</button></td><td class="fraction"></td><td class="info-row"><p style="display: none">${masterList.length - 1}</p><span>${desc}</span></td></tr>`;
-
-
-            //Add row to column
-            $('tbody').append(ele);
 
             return allListings;
         }
     )
     } 
 
-    //var magString = JSON.stringify(masterList);
+    //AFTER FOR LOOP IS COMPLETE
 
-
+    // Put listings on screen
+    console.log('ALL LISTINGS\n', allListings)
+    print(allListings);
 
     $('#results').hide();
-    $('#complete').show();
-    $('#complete').text(`Query Completed. ${titles.length} titles ready to download.`)
 
-    console.log('MASTER LIST:\n', masterList);
+    // On Click Statements
+    clickers();
 
-    console.log('ROLL ARRAY\n', roll);
-
-
-    // OnClick for each next button
-    $(document).on("click", ".next-btn", function (ev) {
-        var ele = $(this);
-        var num = parseInt($(this).siblings('.info-row').children('p').text());
-        cycle(true, num, ele);
-    });
-
-     // OnClick for each next button
-     $(document).on("click", ".prev-btn", function (ev) {
-        var ele = $(this);
-        var num = parseInt($(this).siblings('.info-row').children('p').text());
-        cycle(false, num, ele);
-    });
-
-    
-
-    if (masterList.length < 2) {  $('#watch-torrents').show();  } else {  $('#watch-torrents').show();  }
-
+    // Reveal buttons1
     $('#submit-torrents').show();
-
-    $('#watch-torrents').on('click', function () {
-        console.log('requesting stream\n', masterList[0]);
-        
-    });
-
-    $('#submit-torrents').on('click', function(ev) {
-        pushTorrents(masterList, domain);
-    });
-
+    $('#reload').show();
+    $('#log').show();
     $('#results-torrent').hide();
-
 
     return allListings;
 
 }
 
-function cycle(direction, num, ele) {
-    // Go ahead and advance to next listing.
-    console.log('post', num)
+function print(allListings) {
+
+    
+    // All Movies Loop
+    //if (indexToChange) {index = indexToChange} else {index = 0}
+
+    for (let i = 0; i < allListings.length; i++) {
+        
+        let queryID = allListings[i].id;
+        let query = allListings[i].query;
+
+        // Clear list for new selection items
+        var MovieElementList = [];
+
+        for (let s = 0; s < allListings[i].results.length; s++) {
+            // First Movie in list
+            let curr = allListings[i].results[s];
+            let title = curr.title;
+            let size = curr.size;
+            let resolution = curr.resolution;
+            let seeds = curr.seeds;
+            let style = "display: none";
+
+            // Make sure first item is visible
+            if (s === 0) {style = "display: block"}
+
+            // Set element's description for the current movie's listing
+            let desc = `( ${s + 1} / ${allListings[i].results.length} ) | Resolution: ${resolution}p Size: ${size} Seeders: ${seeds} | Query: ${query} | ${title.slice(0,30)}`
+            let currEle = `<div style="${style}" class="${s}" title="${title}">${desc}</div>`;
+        
+            // Push all listings for this movie to an array
+            MovieElementList.push(currEle);
+        }
 
 
-    // Fetch results for current listing, and add to the index in the roll sheet or reset if at the end.
-    var array = allListings[num];
-    if (direction) {
-        roll[num].index ++;
-    } else {
-        roll[num].index --;
+        let movieEle = `
+        <tr id="${queryID}">
+            <td class="prev-btn">
+                <button class="btn btn-outline-primary btn-sm">PREV</button>
+            </td>
+            <td class="next-btn">
+                <button class="btn btn-outline-primary btn-sm">NEXT</button>
+            </td>
+            <td class="info-row">${MovieElementList.join('')}</td>
+            <td class="remove-btn">
+                <button class="btn btn-outline-primary btn-sm" style="margin-left: 10px;">REMOVE</button>
+            </td>
+        </tr>
+        `;
+
+        // Put movie listing into DOM
+        $('#table-body').append(movieEle);
+        // Push the movie to the outgoing, changeable list
+        seedboxList.push(allListings[i]);
+
     }
 
-    if (roll[num].index > array.length - 1) {
-        roll[num].index = array.length - 1;
-    }
 
-    if (roll[num].index < 0) {
-        roll[num].index = 0;
-    }
+    
+    //Results
+    $('#complete').show();
 
-    // Set index of current result being displayed for the current listing and show it in the UI.
-    var fraction = `<td>( ${roll[num].index + 1} / ${array.length} )</td>`;
-    $('.fraction').eq(num).html(fraction);
-
-
-    console.log('LISTING', num, 'RESULT', roll[num].index + 1);
-
-
-    var out = array[roll[num].index];
-
-    // Report current array result
-    console.log('CHANGED TO:\n', out);
-
-    //Modify the html for ease of use.
-    var descriptor = `Resolution: ${out.resolution}p Size: ${out.size} Seeders: ${out.seeds} | ${out.title.slice(0, 40)}`;
-    ele.siblings('.info-row').find('span').html(descriptor);
-
-    // Modify the masterList
-    masterList[num] = out;
-    console.log('MASTER LIST MODIFIED\n', masterList);
+    //Set text of results message but replace \n with a break using regex
+    var obj = $('#complete').text(`Query Completed. ${allListings.length} titles ready to download.\nThe following queries yielded no results:\n${noResults.join('\n')}`)
+    obj.html(obj.html().replace(/\n/g,'<br/>'));
 }
 
+function cycle(direction, id) {
+    // Get index by id for the movie we are changing
+    var toChange = seedboxList.findIndex(x => x.id === id);
+    console.log('change', id, toChange)
+    // Num of results for the movie
+    var resultsCount = seedboxList[toChange].results.length;
+    // ID in the DOM
+    var domID = `#${id}`;
 
+    //Hide Existing Result
+    var resultClass = `.${seedboxList[toChange].which}`;
+    $(domID).find(resultClass).hide();
+
+    // True is forward. Add to which
+    if (direction) {seedboxList[toChange].which++} else {seedboxList[toChange].which--}
+    // Set boundaries for the selection to be made
+    if (  seedboxList[toChange].which < 0  ) {  seedboxList[toChange].which = 0  } else if (  seedboxList[toChange].which > resultsCount - 1   ) {  seedboxList[toChange].which = resultsCount - 1  }
+
+    //Show New Result
+    resultClass = `.${seedboxList[toChange].which}`;
+    $(domID).find(resultClass).show();
+}
+
+async function remove(id) {
+    // Get index in seedboxList 
+    var toRemove = seedboxList.findIndex(x => x.id === id);
+    if (toRemove < 0 ){toRemove = 0}
+    console.log(id, toRemove);
+
+    //Set the id to remove and remove it
+    var domID = `#${id}`
+    $(domID).hide();
+    $(domID).remove();
+    // Clear listeners and reinstate On Click Statements
+    $(document).off();
+    await clickers();
+    
+    //Remove the movie from the seedbox list
+    console.log('removed', seedboxList[toRemove].query, '\n', seedboxList);
+    seedboxList.splice(toRemove, 1);
+
+    //Reload if no more results
+    if (seedboxList.length === 0) {window.location.reload();}
+}
+
+async function clickers(){
+
+    // OnClick for each next button
+    $(document).on("click", ".next-btn", function (ev) {
+        var id = parseInt($(this).parent('tr').attr('id'));
+        cycle(true, id)
+    });
+
+    // OnClick for each prev button
+    $(document).on("click", ".prev-btn", function (ev) {
+        var id = parseInt($(this).parent('tr').attr('id'));
+        cycle(false, id)
+    });
+
+    // OnClick for each remove button
+    $(document).on("click", ".remove-btn", function (ev) {
+        var id = parseInt($(this).parent('tr').attr('id'));
+        remove(id);
+    });
+
+    // Manual Log Button
+    $('#log').on('click', function() {
+        console.log('Manual Log of Seedbox List\n', seedboxList)
+    });
+
+    //Click to send to seedbox
+    $('#submit-torrents').on('click', async function(ev) {
+        console.log('Submitting');
+        $(this).text('Sending....')
+        var result = await pushTorrents(seedboxList);
+        if (result) {$(this).text('Sent')} else {$(this).text('Error')}
+    });
+}

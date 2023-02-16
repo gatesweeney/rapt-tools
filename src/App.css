@@ -58,7 +58,7 @@
 }
 
 /* Buttons */
-#submit-torrents, #watch-torrents,#get-magnets { display: none; }
+#submit-torrents, #reload,#get-magnets, #log { display: none; }
 
 #myBar {
   width: 0%;
@@ -103,6 +103,8 @@
     transform: rotate(360deg);
   }
 }
+
+.wrapper {margin-bottom: 100px;}
 
 .flex-grid {
   display: -ms-flexbox;
