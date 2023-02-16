@@ -83,6 +83,7 @@ function Torrent() {
       <div>
         <h1 className="display-3">Torrent Search</h1>
         <p>You may upload a CSV file with the headers 'Movie' and 'Year', or search single movies below.</p>
+        <p>To view the status of active torrents <a href="/seedstatus">click here</a></p>
         <input
           type="file"
           className="form-control"

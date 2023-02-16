@@ -1,4 +1,5 @@
 import React from "react";
+import './App.css'
 import TagManager from 'react-gtm-module'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"; // Removed "Link"
 import { Webp } from "./webp";
@@ -6,7 +7,10 @@ import { HEIC } from "./heic";
 import { Compressor } from "./compressor";
 import { Pantone } from "./pantone";
 import { Torrent } from "./torrent/Torrent"
-import './App.css'
+import { SeedStatus } from "./seedStatus";
+
+
+
 
 function App() {
 
@@ -38,6 +42,9 @@ function App() {
         </Route>
         <Route path="/torrent">
           <Torrent />
+        </Route>
+        <Route path="/seedstatus">
+          <SeedStatus />
         </Route>
         <Route path="/">
           <Home />

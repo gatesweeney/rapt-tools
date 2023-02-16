@@ -218,3 +218,13 @@ h5 {
 #pName { border-right: 0px;}
 
 .colorbox > p {cursor: pointer;}
+
+.empty {display: none}
+
+.torrent-list {
+  width: 95vw;
+}
+
+.tlist-item {
+  white-space:nowrap;
+}
