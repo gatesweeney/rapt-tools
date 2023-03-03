@@ -22,7 +22,7 @@ export default async function pushTorrents(list, type) {
         body: JSON.stringify(  {torrents: toSend, type: type}  )
         })
         .then(response => response.json())
-        .then(response => console.log('response', JSON.stringify(response)))
+        .then(response => console.log('response', response))
 
         return true;
     } catch (error) {
