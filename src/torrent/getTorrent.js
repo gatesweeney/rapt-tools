@@ -1,4 +1,5 @@
 import $ from "jquery";
+import GetDomain from "../GetDomain";
 import pushTorrents from "./pushTorrents";
 import { Torrent } from "./Torrent";
 
@@ -8,12 +9,11 @@ var seedboxList =[];
 
 export default async function getTorrents(csvData, site, limit, seedMin) {
 
-
     $('#results-torrent').show();
     $('#single-form').hide();
     $('.form-control').hide();
 
-    var domain = 'api.gatesweeney.com';
+    var domain = GetDomain()
     var category = 'Movies'; 
     
 
@@ -40,7 +40,7 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
         query = query.replace(/[^a-zA-Z0-9 ]/g, '');
         query = query.replaceAll(' ', '%20');
         // URL structure
-        var url = `https://${domain}/api/torrent-search/?search=${query}&limit=${limit}&category=${category}`
+        var url = `${domain}/api/torrent-search/?search=${query}&limit=${limit}&category=${category}`
 
         console.log(url);
 
@@ -63,6 +63,7 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
                     // get size of item
                     var size = String(req[m].size);
                     var title = req[m].title;
+                    
                     var resolution;
                     var season;
                     var episode;
@@ -241,7 +242,6 @@ function print(allListings) {
 function cycle(direction, id) {
     // Get index by id for the movie we are changing
     var toChange = seedboxList.findIndex(x => x.id === id);
-    console.log('change', id, toChange)
     // Num of results for the movie
     var resultsCount = seedboxList[toChange].results.length;
     // ID in the DOM
@@ -310,9 +310,15 @@ async function clickers(){
 
     //Click to send to seedbox
     $('#submit-torrents').on('click', async function(ev) {
+        var type = GetType()
+        console.log(type)
         console.log('Submitting');
         $(this).text('Sending....')
-        var result = await pushTorrents(seedboxList);
+        var result = await pushTorrents(seedboxList, type);
         if (result) {$(this).text('Sent')} else {$(this).text('Error')}
     });
+}
+
+function GetType() {
+    if ($('#movies').is(':checked')) {return 'Movies'} else { return 'TV'}
 }

@@ -1,7 +1,8 @@
 import React from "react";
 import $ from 'jquery';
+import GetDomain from "./GetDomain";
 
-var endpoint = 'https://api.gatesweeney.com/api/seedbox';
+var endpoint = `${GetDomain()}/api/seedbox`;
 
 
 function SeedStatus() {

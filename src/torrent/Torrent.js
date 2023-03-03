@@ -82,6 +82,19 @@ function Torrent() {
         <h1 className="display-3">Torrent Search</h1>
         <p>You may upload a CSV file with the headers 'Movie' and 'Year', or search single movies below. Hover over the torrent title to see the full length to verify details.</p>
         <p>To view the status of active torrents <a href="/seedstatus">click here</a></p>
+        <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="movies" checked></input>
+        <label class="form-check-label" for="flexRadioDefault1">
+          Movies
+        </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="tv"></input>
+          <label class="form-check-label" for="flexRadioDefault2">
+            TV Shows
+          </label>
+        </div>
+        <br></br>
         <input
           type="file"
           className="form-control"

@@ -1,9 +1,9 @@
+import GetDomain from "../GetDomain";
 
-
-export default async function pushTorrents(list) {
+export default async function pushTorrents(list, type) {
 
     var toSend = [];
-    var domain = 'api.gatesweeney.com';
+    var domain = GetDomain()
 
     for (let i = 0; i < list.length; i++) {
         var which = list[i].which;
@@ -13,17 +13,16 @@ export default async function pushTorrents(list) {
     console.log('Sending to seedbox...\n', toSend);
 
     try {
-        await fetch(`https://${domain}/api/seedbox/`, {
+        await fetch(`${domain}/api/seedbox/`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json',
-
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify(toSend)
+        body: JSON.stringify(  {torrents: toSend, type: type}  )
         })
         .then(response => response.json())
-        .then(response => console.log(JSON.stringify(response)))
+        .then(response => console.log('response', JSON.stringify(response)))
 
         return true;
     } catch (error) {
