@@ -2,7 +2,7 @@ import React from "react";
 import $ from 'jquery';
 import GetDomain from "./GetDomain";
 
-var endpoint = `${GetDomain()}/api/seedbox`;
+var endpoint = `https://api.gatesweeney.com/api/seedbox`;
 
 
 function SeedStatus() {
@@ -44,6 +44,13 @@ async function getJSON() {
 
         $('.container').empty();
 
+        $('.tremove').each(function () {
+          $(this).on('click', function() {
+            var id = $(this).attr('id')
+            
+          })
+        })
+
 
         // Show space
         $('.container').append(`<p>Space remaining on server: <b>${space} TB</b></p><br></br>`)
@@ -61,7 +68,10 @@ async function getJSON() {
         
           <div class="row">
             <div class="col tlist-item">
-              ${name}
+              <a href="#" class='tremove' id="${id}">Remove</a>
+            </div>
+            <div class="col tlist-item" title="${name}">
+              ${name.slice(0,40)}
             </div>
             <div class="col tlist-item">
               Size: ${size} GB | Speed: ${dlSpeed} MB/s | ${percent}% Complete
