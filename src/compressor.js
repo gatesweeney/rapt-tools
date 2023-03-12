@@ -159,15 +159,12 @@ async function processFiles(files) {
 
     file = files[f];
     var name = file.name;
-    // Gets last array item when split by a period
-    var extension = name.split('.').slice(-1)[0] ;
-    var newName = name.replace(extension, "jpg")
 
     var convertedFile = await imageCompression(file, options);
 
     const blob = URL.createObjectURL(convertedFile);
 
-    blobArray.push({"blob": blob, "name": newName});
+    blobArray.push({"blob": blob, "name": name});
 
   }
 
