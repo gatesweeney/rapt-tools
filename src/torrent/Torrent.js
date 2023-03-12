@@ -79,7 +79,7 @@ function Torrent() {
   var out = (
       <div className="wrapper">
         <h1 className="display-3">Torrent Search</h1>
-        <p>You may upload a CSV file with the headers 'Movie' and 'Year', or search single movies below. Hover over the torrent title to see the full length to verify details.</p>
+        <p>You may upload a CSV file with the headers 'Movie' and 'Year', or search single torrents below. Hover over the torrent title to see the full length to verify details.</p>
         <p>To view the status of active torrents <a href="/seedstatus">click here</a></p>
         <div class="form-check">
         <input class="form-check-input" type="radio" name="flexRadioDefault1" id="movies"></input>
@@ -122,7 +122,7 @@ function Torrent() {
         <div id="results-torrent">
           <div id="current-movie">Searching movie: <span>movie</span></div>
           <br />
-          <div id="loading">Processed <span id="movie-now">0</span> / <span id="total-movies">0</span> movies.</div>
+          <div id="loading">Processed <span id="movie-now">0</span> / <span id="total-movies">0</span> queries.</div>
           <br />
           <div id="myProgress">
             <div id="myBar"></div>
