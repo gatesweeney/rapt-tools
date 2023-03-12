@@ -1,6 +1,5 @@
 import React from "react";
 import $ from 'jquery';
-import GetDomain from "./GetDomain";
 
 var endpoint = `https://api.gatesweeney.com/api/seedbox`;
 
@@ -47,7 +46,7 @@ async function getJSON() {
         $('.tremove').each(function () {
           $(this).on('click', function() {
             var id = $(this).attr('id')
-            
+            // TODO call api to remove
           })
         })
 

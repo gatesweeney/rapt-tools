@@ -29,6 +29,5 @@ export default async function pushTorrents(list, type) {
         console.log(error);
         return false;
     }
-
     
 }
