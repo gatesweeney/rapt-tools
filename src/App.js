@@ -8,6 +8,7 @@ import { Compressor } from "./compressor";
 import { Pantone } from "./pantone";
 import { Torrent } from "./torrent/Torrent"
 import { SeedStatus } from "./seedStatus";
+import { TorFile } from "./TorFile";
 
 
 
@@ -45,6 +46,9 @@ function App() {
         </Route>
         <Route path="/seedstatus">
           <SeedStatus />
+        </Route>
+        <Route path="/torfile">
+          <TorFile />
         </Route>
         <Route path="/">
           <Home />
