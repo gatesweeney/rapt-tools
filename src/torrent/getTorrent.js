@@ -326,3 +326,4 @@ async function clickers(){
 function GetType() {
     if ($('#movies').is(':checked')) {return 'Movies'} else if ($('#tv').is(':checked')) {return 'TV'} else if ($('#other').is(':checked')) { return 'Other'} else { return 'none' }
 }
+

@@ -3,6 +3,8 @@ import React from "react";
 import Papa from "papaparse";
 import getTorrents from "./getTorrent";
 import $ from "jquery";
+import pushTorrents from "./pushTorrents"
+import GetDomain from "../GetDomain";
 
 
 let site = 'piratebay';
@@ -67,6 +69,7 @@ function Torrent() {
   };
 
   $(document).on("click", "#torrent-single-submit", function(e){  e.preventDefault();  })
+  $(document).on("click", "#magnet-submit", function(e){  e.preventDefault();  })
 
   async function singleTorrent() {
      
@@ -76,6 +79,48 @@ function Torrent() {
       getTorrents(movieList, site, limit, seedMin);
     }
   }
+
+  async function magnetSubmit() {
+     
+    var query = $("#magnet-query").val();
+    if (query !== '') {
+      pushTorrents([query], GetType())
+    }
+  }
+
+
+
+async function sendMagnet(magnet, type) {
+  
+    var domain = GetDomain()
+
+    console.log('Sending to seedbox...\n', magnet);
+
+    try {
+        await fetch(`${domain}/api/seedbox/magnet`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(  magnet  )
+        })
+        .then(response => response.json())
+        .then(response => console.log('response', response))
+
+        return true;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+    
+}
+
+  function GetType() {
+    if ($('#movies').is(':checked')) {return 'Movies'} else if ($('#tv').is(':checked')) {return 'TV'} else if ($('#other').is(':checked')) { return 'Other'} else { return 'none' }
+}
+
+
   var out = (
       <div className="wrapper">
         <h1 className="display-3">Torrent Search</h1>
@@ -117,6 +162,13 @@ function Torrent() {
               </div>
               <input  id="torrent-query" type="text" className="form-control setting" placeholder="Avengers Endgame 2019" autoFocus={true}></input>
               <input className="btn btn-outline-primary" id="torrent-single-submit" type="submit" onClick={singleTorrent}></input>
+          </form>
+          <form id="magnet-form" className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="input-group-text">Send Magnet Link</span>
+              </div>
+              <input  id="magnet-query" type="text" className="form-control setting" placeholder="magnet:cverbifblvevekvle"></input>
+              <input className="btn btn-outline-primary" id="magnet-submit" type="submit" onClick={magnetSubmit}></input>
           </form>
         </div>
         <br></br>
