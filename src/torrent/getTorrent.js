@@ -11,6 +11,7 @@ export default async function getTorrents(csvData, site, limit, seedMin) {
 
     $('#results-torrent').show();
     $('#single-form').hide();
+    $('#magnet-form').hide();
     $('.form-control').hide();
 
     var domain = GetDomain()

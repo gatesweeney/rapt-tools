@@ -84,7 +84,7 @@ function Torrent() {
      
     var query = $("#magnet-query").val();
     if (query !== '') {
-      pushTorrents([query], GetType())
+      sendMagnet([query], GetType())
     }
   }
 
@@ -94,23 +94,34 @@ async function sendMagnet(magnet, type) {
   
     var domain = GetDomain()
 
+    $('#single-form').hide()
+    $('#uploader').hide()
+
+    if (type === 'none') {
+        alert('Please Choose a Type')
+        return
+    }    
+
     console.log('Sending to seedbox...\n', magnet);
 
     try {
-        await fetch(`${domain}/api/seedbox/magnet`, {
+        await fetch(`https://api.gatesweeney.com/api/seedbox/magnet`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(  magnet  )
+        body: JSON.stringify(  { magnet: magnet, type: type }  )
         })
         .then(response => response.json())
         .then(response => console.log('response', response))
 
+        $("#magnet-report").text("Sent Successfully")
+
         return true;
     } catch (error) {
         console.log(error);
+        $("#magnet-report").text("Error")
         return false;
     }
     
@@ -148,6 +159,7 @@ async function sendMagnet(magnet, type) {
         <br></br>
         <input
           type="file"
+          id="uploader"
           className="form-control"
           name="file"
           onChange={changeHandler}
@@ -170,6 +182,8 @@ async function sendMagnet(magnet, type) {
               <input  id="magnet-query" type="text" className="form-control setting" placeholder="magnet:cverbifblvevekvle"></input>
               <input className="btn btn-outline-primary" id="magnet-submit" type="submit" onClick={magnetSubmit}></input>
           </form>
+          <br></br>
+          <p id="magnet-report"></p>
         </div>
         <br></br>
         <div id="results-torrent">
