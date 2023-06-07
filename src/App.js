@@ -9,6 +9,7 @@ import { Pantone } from "./pantone";
 import { Torrent } from "./torrent/Torrent"
 import { SeedStatus } from "./seedStatus";
 import { TorFile } from "./TorFile";
+import { NoSleep } from "./nosleep";
 
 
 
@@ -49,6 +50,9 @@ function App() {
         </Route>
         <Route path="/torfile">
           <TorFile />
+        </Route>
+        <Route path="/nosleep">
+          <NoSleep />
         </Route>
         <Route path="/">
           <Home />
