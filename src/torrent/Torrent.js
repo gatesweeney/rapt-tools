@@ -128,7 +128,11 @@ async function sendMagnet(magnet, type) {
 }
 
   function GetType() {
-    if ($('#movies').is(':checked')) {return 'Movies'} else if ($('#tv').is(':checked')) {return 'TV'} else if ($('#music').is(':checked')) {return 'Music'} else if ($('#other').is(':checked')) { return 'Other'} else { return 'none' }
+    if ($('#movies').is(':checked')) {return 'Movies'}
+    else if ($('#tv').is(':checked')) {return 'TV'}
+    else if ($('#music').is(':checked')) {return 'Music'}
+    else if ($('#other').is(':checked')) { return 'Other'}
+    else { return 'none' }
 }
 
 
