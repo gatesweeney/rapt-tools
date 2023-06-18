@@ -1,167 +1,81 @@
-import React from "react";
-import $ from 'jquery';
+import * as React from 'react';
+import { DataGridPro, useGridApiRef } from '@mui/x-data-grid-pro';
+import {
+  randomInt,
+  randomUserName,
+  randomArrayItem,
+} from '@mui/x-data-grid-generator';
 import Box from '@mui/material/Box';
-import { DataGrid, useGridApiRef } from '@mui/x-data-grid';
-import { Button } from '@mui/material';
-
-
-var endpoint = `https://api.gatesweeney.com/api/seedbox`;
-
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 const columns = [
-  {
-    field: 'tID',
-    headerName: 'Torrent',
-    type: 'number',
-    width: 110,
-    editable: true,
-  },
-  {
-    field: 'name',
-    headerName: 'Name',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'speed',
-    headerName: 'Speed',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'size',
-    headerName: 'Size',
-    type: 'number',
-    width: 110,
-    editable: false,
-  },
-  {
-    field: 'completed',
-    headerName: 'Completed',
-    type: 'number',
-    width: 110,
-    editable: false,
-  },
+  { field: 'id' },
+  { field: 'username', width: 150 },
+  { field: 'age', width: 80, type: 'number' },
 ];
 
-var rows = []
+let idCounter = 0;
+const createRandomRow = () => {
+  idCounter += 1;
+  return { id: idCounter, username: randomUserName(), age: randomInt(10, 80) };
+};
 
+const rows = [
+  createRandomRow(),
+  createRandomRow(),
+  createRandomRow(),
+  createRandomRow(),
+];
 
-function SeedStatus() {
+export default function SeedStatus() {
   const apiRef = useGridApiRef();
 
+  const handleUpdateRow = () => {
+    const rowIds = apiRef.current.getAllRowIds();
+    const rowId = randomArrayItem(rowIds);
 
-    setInterval(getJSON(apiRef), 1200);
+    apiRef.current.updateRows([{ id: rowId, username: randomUserName() }]);
+  };
 
-    return (
-        <div>
-          <h1 className="display-3">Seedbox Status</h1>
-          <a href="/torrent">Back to Search</a><br></br><br></br><br></br><br></br>
-          <p className="loading">Loading...</p>
-          <p className="empty">There are currently no active torrents</p>
-          <div className="container torrent-list">
-          
-          </div>
-          <Box sx={{ height: "auto", width: '100%' }}>
-            <DataGrid
-              apiRef={apiRef}
-              rows={rows}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: {
-                    pageSize: 20,
-                  },
-                },
-              }}
-              pageSizeOptions={[20]}
-              disableRowSelectionOnClick
-              //onCellClick={handleCellClick}
-              //onRowClick={handleRowClick}
-            />
-          </Box>
-        </div>
-    )
+  const handleUpdateAllRows = () => {
+    const rowIds = apiRef.current.getAllRowIds();
 
-}
+    apiRef.current.updateRows(
+      rowIds.map((rowId) => ({ id: rowId, username: randomUserName() })),
+    );
+  };
 
-export { SeedStatus };
+  const handleDeleteRow = () => {
+    const rowIds = apiRef.current.getAllRowIds();
+    const rowId = randomArrayItem(rowIds);
 
+    apiRef.current.updateRows([{ id: rowId, _action: 'delete' }]);
+  };
 
-async function getJSON(apiRef) {
-  $('.loading').hide();
-  await $.getJSON(endpoint,
-    function (data) {
-      var json = data.json;
-      var space = (data.space["size-bytes"] / 1099511627776).toFixed(2);
-      var path = data.space.path;
-      var removed = json.removed;
-      var torrents = json.torrents;
-      if (torrents.length === 0 ){
-        $('.empty').show();
-        $('.container').empty();
-      } else {
+  const handleAddRow = () => {
+    apiRef.current.updateRows([createRandomRow()]);
+  };
 
-        $('.empty').hide();
-
-        $('.container').empty();
-
-        $('.tremove').each(function () {
-          $(this).on('click', function() {
-            var id = $(this).attr('id')
-            // TODO call api to remove
-          })
-        })
-
-
-        // Show space
-        $('.container').append(`<p>Space remaining on server: <b>${space} TB</b></p><br></br>`)
-
-
-        
-
-        for (let i = 0; i < torrents.length; i++) {
-
-          var name = torrents[i].name;
-          var id = torrents[i].id;
-          var dlSpeed = (torrents[i].rateDownload / 1048576).toFixed(2);
-          var size = (torrents[i].sizeWhenDone / 1024 / 1024 / 1024).toFixed(2);
-          var percent = parseFloat(torrents[i].percentDone * 100).toFixed(2);
-
-          var row = {id: i+1, tid: id, name: name, speed: dlSpeed, size: size, completed: percent}
-
-  
-
-
-          var ele = `
-        
-          <div class="row">
-            <div class="col tlist-item">
-              <a href="#" class='tremove' id="${id}">Remove</a>
-            </div>
-            <div class="col tlist-item" title="${name}">
-              ${name.slice(0,40)}
-            </div>
-            <div class="col tlist-item">
-              Size: ${size} GB | Speed: ${dlSpeed} MB/s | ${percent}% Complete
-            </div>
-          </div>
-          
-          
-          <br></br>
-        
-          `
-          
-          $('.container').append(ele);
-          
-        }
-
-
-      }
-
-      
-
-
-    }
+  return (
+    <Box sx={{ width: '100%' }}>
+      <Stack direction="row" spacing={1}>
+        <Button size="small" onClick={handleUpdateRow}>
+          Update a row
+        </Button>
+        <Button size="small" onClick={handleUpdateAllRows}>
+          Update all rows
+        </Button>
+        <Button size="small" onClick={handleDeleteRow}>
+          Delete a row
+        </Button>
+        <Button size="small" onClick={handleAddRow}>
+          Add a row
+        </Button>
+      </Stack>
+      <Box sx={{ height: 400, mt: 1 }}>
+        <DataGridPro apiRef={apiRef} rows={rows} columns={columns} />
+      </Box>
+    </Box>
   );
 }

@@ -128,7 +128,7 @@ async function sendMagnet(magnet, type) {
 }
 
   function GetType() {
-    if ($('#movies').is(':checked')) {return 'Movies'} else if ($('#tv').is(':checked')) {return 'TV'} else if ($('#other').is(':checked')) { return 'Other'} else { return 'none' }
+    if ($('#movies').is(':checked')) {return 'Movies'} else if ($('#tv').is(':checked')) {return 'TV'} else if ($('#music').is(':checked')) {return 'Music'} else if ($('#other').is(':checked')) { return 'Other'} else { return 'none' }
 }
 
 
@@ -148,6 +148,12 @@ async function sendMagnet(magnet, type) {
           <input class="form-check-input" type="radio" name="flexRadioDefault1" id="tv"></input>
           <label class="form-check-label" for="flexRadioDefault1">
             TV Shows
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault1" id="music"></input>
+          <label class="form-check-label" for="flexRadioDefault1">
+            Music
           </label>
         </div>
         <div class="form-check">

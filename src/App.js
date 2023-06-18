@@ -7,7 +7,7 @@ import { HEIC } from "./heic";
 import { Compressor } from "./compressor";
 import { Pantone } from "./pantone";
 import { Torrent } from "./torrent/Torrent"
-import { SeedStatus } from "./seedStatus";
+import SeedStatus from "./seedStatus";
 import { TorFile } from "./TorFile";
 import { NoSleep } from "./nosleep";
 
