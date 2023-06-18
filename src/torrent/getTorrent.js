@@ -200,7 +200,7 @@ function print(allListings) {
             if (s === 0) {style = "display: block"}
 
             // Set element's description for the current movie's listing
-            let desc = `( ${s + 1} / ${allListings[i].results.length} ) | Resolution: ${resolution}p Size: ${size} Seeders: ${seeds} | Query: ${query} | ${title.slice(0,30)}`
+            let desc = `( ${s + 1} / ${allListings[i].results.length} ) | Resolution: ${resolution}p Size: ${size} Seeders: ${seeds} | Query: ${query} | ${title.slice(0,70)}`
             let currEle = `<div style="${style}" class="${s}" title="${title}">${desc}</div>`;
         
             // Push all listings for this movie to an array
